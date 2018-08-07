@@ -8,6 +8,6 @@ import com.nightcrawler.bakingapp.appWidget.MyWidgetRemoteViewsFactory;
 public class MyWidgetRemoteViewsService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new MyWidgetRemoteViewsFactory(this.getApplicationContext(), intent);
+        return new MyWidgetRemoteViewsFactory(getApplicationContext(), intent);
     }
 }

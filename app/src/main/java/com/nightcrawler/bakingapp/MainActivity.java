@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nightcrawler.bakingapp.appWidget.CollectionAppWidgetProvider;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,22 +82,23 @@ public class MainActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(Contract.COL_TODO_TEXT, "Test");
 
-        final Uri uri = this.getContentResolver().insert(Contract.PATH_TODOS_URI, values);
+        this.getContentResolver().insert(Contract.PATH_TODOS_URI, values);
+        CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
 
 
+//        Cursor cursor=this.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,
+//                null,null);
+//
+//        int i=0;
+//        final ArrayList<String> items = new ArrayList<>();
+//        while(cursor.moveToNext()) {
+////            TodoModel item = new TodoModel(cursor.getInt(0), );
+//            i++;
+//            items.add(cursor.getString(1)+i);
+//            Toast.makeText(this, items.get(i-1), Toast.LENGTH_SHORT).show();
+//            Log.v(i+"  ",items.get(i-1));
+//        }
 
-        Cursor cursor=this.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,
-                null,null);
-
-        int i=0;
-        final ArrayList<String> items = new ArrayList<>();
-        while(cursor.moveToNext()) {
-//            TodoModel item = new TodoModel(cursor.getInt(0), );
-            i++;
-            items.add(cursor.getString(1)+i);
-            Toast.makeText(this, items.get(i-1), Toast.LENGTH_SHORT).show();
-            Log.v(i+"  ",items.get(i-1));
-        }
 
 
 
@@ -111,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 //        cValues.put(dishContract.STEPS,"Step2");
 //        getContentResolver().insert(dishContract.CONTENT_URI, cValues);
 
-//        homeWidget.sendRefreshBroadcast(getBaseContext());
 
     }
 

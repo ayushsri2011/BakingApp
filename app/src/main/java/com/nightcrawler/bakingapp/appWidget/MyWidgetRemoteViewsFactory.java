@@ -5,19 +5,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Binder;
 import android.util.Log;
-import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import com.nightcrawler.bakingapp.R;
+import android.widget.Toast;
+
 import com.nightcrawler.bakingapp.Contract;
+import com.nightcrawler.bakingapp.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context mContext;
-    private Cursor mCursor;
+    private List<String> widgetList;
 
     public MyWidgetRemoteViewsFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
@@ -25,52 +29,66 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
     @Override
     public void onCreate() {
+        updateWidgetListView();
+    }
+
+    private void updateWidgetListView() {
+
+        widgetList = new ArrayList<>();
+//        Uri uri = Contract.PATH_TODOS_URI;
+        try {
+            Cursor cursor=mContext.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,
+                    null,null);
+
+            cursor.moveToFirst();
+
+            if (cursor.getCount() == 0) {
+                widgetList.add("No entry");
+            } else {
+                cursor.moveToFirst();
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    widgetList.add(cursor.getString(1));
+                    cursor.moveToNext();
+                }
+            }
+
+        } catch (Exception e) {
+            Log.v("Failed to fetch values", "Fail");
+            e.printStackTrace();
+            String[] widgetFruitsArray = {"String 1", "String 2", "String 3"};
+            Log.v("Finally Section Run", "");
+            this.widgetList = new ArrayList<String>(Arrays.asList(widgetFruitsArray));
+        }
+
 
     }
 
     @Override
     public void onDataSetChanged() {
 
-        if (mCursor != null) {
-            mCursor.close();
-        }
-
-        final long identityToken = Binder.clearCallingIdentity();
-        Uri uri = Contract.PATH_TODOS_URI;
-        mCursor = mContext.getContentResolver().query(uri,
-                null,
-                null,
-                null,
-                null);
-        if(mCursor!=null)
-        Log.v("Hey Cursor not null","..");
-
-
-        Binder.restoreCallingIdentity(identityToken);
-
+        updateWidgetListView();
     }
 
     @Override
     public void onDestroy() {
-        if (mCursor != null) {
-            mCursor.close();
-        }
+        widgetList.clear();
     }
 
     @Override
     public int getCount() {
-        return mCursor == null ? 0 : mCursor.getCount();
+        return widgetList.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
-        if (position == AdapterView.INVALID_POSITION ||
-                mCursor == null || !mCursor.moveToPosition(position)) {
-            return null;
-        }
 
         RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.collection_widget_list_item);
-        rv.setTextViewText(R.id.widgetItemTaskNameLabel, mCursor.getString(1));
+        rv.setTextViewText(R.id.widgetItemTaskNameLabel, widgetList.get(position));
+
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtra("Extra", widgetList.get(1));
+        rv.setOnClickFillInIntent(R.id.widgetItemContainer, fillInIntent);
+
 
         return rv;
     }
@@ -87,12 +105,12 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
     @Override
     public long getItemId(int position) {
-        return mCursor.moveToPosition(position) ? mCursor.getLong(0) : position;
+        return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return true;
+        return false;
     }
 
 }

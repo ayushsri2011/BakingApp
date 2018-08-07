@@ -22,10 +22,10 @@
         <provider
             android:name=".MyContentProvider"
             android:authorities="com.nightcrawler.bakingapp"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
-            android:name=".MyWidgetRemoteViewsService"
+            android:name=".appWidget.MyWidgetRemoteViewsService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
 
@@ -37,7 +37,7 @@
 
         <receiver
             android:name=".appWidget.CollectionAppWidgetProvider"
-            android:label="title_collection_widget" >
+            android:label="App Widget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.nightcrawler.bakingapp.app.ACTION_DATA_UPDATED" />

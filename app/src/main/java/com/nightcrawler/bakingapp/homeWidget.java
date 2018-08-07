@@ -41,11 +41,6 @@ public class homeWidget extends AppWidgetProvider {
 
 
 
-    public static void sendRefreshBroadcast(Context context) {
-        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.setComponent(new ComponentName(context, homeWidget.class));
-        context.sendBroadcast(intent);
-    }
 
     @Override
     public void onReceive(final Context context, Intent intent) {
