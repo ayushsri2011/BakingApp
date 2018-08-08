@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-
 import org.json.JSONException;
-
 import java.util.Objects;
 
 public class DetailsActivity extends AppCompatActivity implements ListFragment.OnOpClickListener {

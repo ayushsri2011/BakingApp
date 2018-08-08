@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 public class DetailsFragment extends Fragment {
     private String t;
-    private TextView textView;
 
     public DetailsFragment() {
     }
@@ -21,7 +20,7 @@ public class DetailsFragment extends Fragment {
 
 
         final View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        textView = rootView.findViewById(R.id.testText2);
+        TextView textView = rootView.findViewById(R.id.testText2);
 
         textView.setText(t);
         return rootView;

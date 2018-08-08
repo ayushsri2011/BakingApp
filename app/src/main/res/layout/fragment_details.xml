@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:text="TEST2"
+        android:text="@string/test"
         android:textColor="#536dfe"
         android:textSize="17dp" />
 

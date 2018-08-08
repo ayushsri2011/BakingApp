@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
         <TextView android:layout_width="match_parent"
             android:id="@+id/widgetTitleLabel"
-            android:text="Collection"
+            android:text="@string/recipe"
             android:textColor="@color/colorWhite"
             android:background="@color/colorPrimary"
             android:textSize="20dp"

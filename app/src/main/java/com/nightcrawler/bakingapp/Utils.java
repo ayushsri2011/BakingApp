@@ -10,11 +10,10 @@ import java.util.ArrayList;
 public class Utils {
 
 
-    public static recipe returnRecipe(int k) throws JSONException{
+    public static recipe returnRecipe(int k) {
         ArrayList<recipeIngredients> recipeIngredientsArrayList = new ArrayList();
         ArrayList<recipeSteps> recipeStepsArrayList = new ArrayList();
         recipe Recipe = new recipe();
-        ArrayList<recipeIngredients> rIngredients;
         try {
             final JSONArray jsonArray = new JSONArray("[  \n" +
                     "   {  \n" +

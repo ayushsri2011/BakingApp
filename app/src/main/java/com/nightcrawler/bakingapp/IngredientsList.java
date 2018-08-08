@@ -32,7 +32,7 @@ public class IngredientsList extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        list = (ListView) findViewById(R.id.listView2);
+        list = findViewById(R.id.listView2);
 
         li = new ArrayList<>();
 //        li.add("Recipe Ingredients");
@@ -48,6 +48,5 @@ public class IngredientsList extends AppCompatActivity {
 
     }
 
-    public static class CollectionAppWidgetProvider {
-    }
+
 }

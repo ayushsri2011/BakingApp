@@ -22,7 +22,7 @@
             android:lines="4"
             android:maxLines="4"
             android:singleLine="false"
-            android:text="CHOOSE YOUR DISH"
+            android:text="@string/choose_your_dish"
             android:textColor="#536dfe"
             android:textSize="40sp" />
     </LinearLayout>
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:background="#ffffff"
             android:padding="3sp"
-            android:text="Nutella Pie"
+            android:text="@string/nutella_pie"
             android:textAlignment="center"
 
             android:textColor="#536dfe"
@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:padding="3sp"
-            android:text="Brownies"
+            android:text="@string/brownies"
             android:textAlignment="center"
             android:background="#ffffff"
             android:textColor="#536dfe"
@@ -70,7 +70,7 @@
             android:layout_weight="1"
             android:background="#ffffff"
             android:padding="3sp"
-            android:text="Yellow Cake"
+            android:text="@string/yellow_cake"
             android:textAlignment="center"
 
             android:textColor="#536dfe"
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:background="#ffffff"
             android:padding="3sp"
-            android:text="Cheesecake"
+            android:text="@string/cheesecake"
             android:textAlignment="center"
             android:textColor="#536dfe"
             android:textSize="28sp"

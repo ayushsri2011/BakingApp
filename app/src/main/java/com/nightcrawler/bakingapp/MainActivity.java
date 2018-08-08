@@ -2,22 +2,15 @@ package com.nightcrawler.bakingapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.nightcrawler.bakingapp.appWidget.CollectionAppWidgetProvider;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView t1, t2, t3, t4;
+
     private Intent intent;
     private Bundle args;
 
@@ -26,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        t1 = (TextView) findViewById(R.id.dish1);
-        t2 = (TextView) findViewById(R.id.dish2);
-        t3 = (TextView) findViewById(R.id.dish3);
-        t4 = (TextView) findViewById(R.id.dish4);
+        TextView t1 = findViewById(R.id.dish1);
+        TextView t2 = findViewById(R.id.dish2);
+        TextView t3 = findViewById(R.id.dish3);
+        TextView t4 = findViewById(R.id.dish4);
 
         intent = new Intent(MainActivity.this, DetailsActivity.class);
 
@@ -83,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
         values.put(Contract.COL_TODO_TEXT, "Test");
 
         this.getContentResolver().insert(Contract.PATH_TODOS_URI, values);
-        CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
+
+        //CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
 
 
 //        Cursor cursor=this.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,

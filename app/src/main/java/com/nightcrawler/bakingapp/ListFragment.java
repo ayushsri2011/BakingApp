@@ -43,7 +43,6 @@ public class ListFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        int k = 0;
         super.onActivityCreated(savedInstanceState);
     }
 

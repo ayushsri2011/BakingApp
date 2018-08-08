@@ -135,6 +135,8 @@ package com.nightcrawler.bakingapp;
         import com.nightcrawler.bakingapp.Contract;
         import com.nightcrawler.bakingapp.DbHelper;
 
+        import java.util.Objects;
+
 public class MyContentProvider extends ContentProvider {
 
     private DbHelper mDbHelper;
@@ -184,7 +186,7 @@ public class MyContentProvider extends ContentProvider {
             default:
                 break;
         }
-
+        if(retCursor!=null)
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return retCursor;
@@ -220,7 +222,7 @@ public class MyContentProvider extends ContentProvider {
                 break;
         }
 
-        getContext().getContentResolver().notifyChange(uri, null);
+        Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
 
         return returnUri;
     }

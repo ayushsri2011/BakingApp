@@ -4,11 +4,9 @@ package com.nightcrawler.bakingapp.appWidget;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.Toast;
 
 import com.nightcrawler.bakingapp.Contract;
 import com.nightcrawler.bakingapp.R;
@@ -35,14 +33,17 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
     private void updateWidgetListView() {
 
         widgetList = new ArrayList<>();
+        widgetList.add(" ");
 //        Uri uri = Contract.PATH_TODOS_URI;
         try {
-            Cursor cursor=mContext.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,
-                    null,null);
+            Cursor cursor = mContext.getContentResolver().query(Contract.PATH_TODOS_URI, null, null,
+                    null, null);
 
-            cursor.moveToFirst();
+            if (cursor != null) {
 
-            if (cursor.getCount() == 0) {
+
+                cursor.moveToFirst();
+                if (cursor.getCount() == 0) {
                 widgetList.add("No entry");
             } else {
                 cursor.moveToFirst();
@@ -51,13 +52,16 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
                     cursor.moveToNext();
                 }
             }
-
+            cursor.close();
+        }
+        else
+                widgetList.add("No entry ");
         } catch (Exception e) {
             Log.v("Failed to fetch values", "Fail");
             e.printStackTrace();
             String[] widgetFruitsArray = {"String 1", "String 2", "String 3"};
             Log.v("Finally Section Run", "");
-            this.widgetList = new ArrayList<String>(Arrays.asList(widgetFruitsArray));
+            this.widgetList = new ArrayList<>(Arrays.asList(widgetFruitsArray));
         }
 
 
