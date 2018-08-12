@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -46,9 +46,9 @@ public class playVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
         java.util.Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        details = (TextView) findViewById(R.id.details);
-        prev_button = (Button) findViewById(R.id.prev_button);
-        next_button = (Button) findViewById(R.id.prev_button);
+        details = findViewById(R.id.details);
+        prev_button = findViewById(R.id.prev_button);
+        next_button = findViewById(R.id.prev_button);
         playerView = findViewById(R.id.video_view);
 
         Intent i = getIntent();
@@ -66,6 +66,7 @@ public class playVideo extends AppCompatActivity {
         videoURL = Recipe.rsteps.get(currentPosition - 1).videoURL;
 
         startVideo();
+
 
         prev_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +110,15 @@ public class playVideo extends AppCompatActivity {
 
         Log.v("videoURL", videoURL);
 
-        if (URLUtil.isValidUrl(videoURL))
-            initializePlayer();
-        else
+
+        if (!Utils.checkConnectivity(playVideo.this)) {
+            Toast.makeText(this, "No internet", Toast.LENGTH_SHORT).show();
+        }
+        else if (!URLUtil.isValidUrl(videoURL))
             Toast.makeText(this, "No video available", Toast.LENGTH_SHORT).show();
+        else
+            initializePlayer();
+
 
 
     }

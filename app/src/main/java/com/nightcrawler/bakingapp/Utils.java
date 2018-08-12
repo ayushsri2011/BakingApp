@@ -1,6 +1,10 @@
 package com.nightcrawler.bakingapp;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -588,4 +592,17 @@ public class Utils {
         return Recipe;
 
     }
+
+    public static boolean checkConnectivity(Context context){
+        try{
+            ConnectivityManager conMgr =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+            return netInfo != null;
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
