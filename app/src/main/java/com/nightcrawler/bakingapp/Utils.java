@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Utils {
 
@@ -596,7 +597,7 @@ public class Utils {
     public static boolean checkConnectivity(Context context){
         try{
             ConnectivityManager conMgr =  (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+            NetworkInfo netInfo = Objects.requireNonNull(conMgr).getActiveNetworkInfo();
             return netInfo != null;
         }catch(Exception e)
         {

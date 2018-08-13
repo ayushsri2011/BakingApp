@@ -3,6 +3,7 @@ package com.nightcrawler.bakingapp;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nightcrawler.bakingapp.appWidget.CollectionAppWidgetProvider;
+
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
@@ -21,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private Intent intent;
     private Bundle args;
-//    @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         TextView t2 = findViewById(R.id.dish2);
         TextView t3 = findViewById(R.id.dish3);
         TextView t4 = findViewById(R.id.dish4);
+
 
         intent = new Intent(MainActivity.this, DetailsActivity.class);
 
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
             @Override
             public void onClick(View v) {
-                Log.v("t3","");
+                Log.v("t3", "");
                 args = new Bundle();
                 args.putInt("KEY", 3);
                 intent.putExtra("BUNDLE", args);
@@ -81,45 +84,30 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
-        ContentValues values = new ContentValues();
-        values.put(Contract.COL_TODO_TEXT, "Test");
 
-        this.getContentResolver().insert(Contract.PATH_TODOS_URI, values);
+        SharedPreferences sharedPreferences = getSharedPreferences("firstStart", 0);
+        boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
 
-        //CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
+        Log.v("OnetimeActivity","Running first time");
 
+        if (firstStart) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("firstStart", false);
+            editor.apply();
 
-//        Cursor cursor=this.getContentResolver().query(Contract.PATH_TODOS_URI,null,null,
-//                null,null);
-//
-//        int i=0;
-//        final ArrayList<String> items = new ArrayList<>();
-//        while(cursor.moveToNext()) {
-////            TodoModel item = new TodoModel(cursor.getInt(0), );
-//            i++;
-//            items.add(cursor.getString(1)+i);
-//            Toast.makeText(this, items.get(i-1), Toast.LENGTH_SHORT).show();
-//            Log.v(i+"  ",items.get(i-1));
-//        }
+            DbOpertionsAysnc dbOpertionsAysnc = new DbOpertionsAysnc();
+            dbOpertionsAysnc.context = getBaseContext();
+            dbOpertionsAysnc.key = 1;
+
+            AsyncTask execute = dbOpertionsAysnc.execute();
 
 
+        }
 
-
-
-
-
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(dishContract.STEPS,"Step1");
-//        getContentResolver().insert(dishContract.CONTENT_URI, contentValues);
-//
-//
-//        ContentValues cValues = new ContentValues();
-//        cValues.put(dishContract.STEPS,"Step2");
-//        getContentResolver().insert(dishContract.CONTENT_URI, cValues);
+        CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
 
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -142,9 +130,17 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals("show_bass"))
+        if(key.equals("categoriesKey"))
+        {
             Toast.makeText(this, "Preference changed", Toast.LENGTH_SHORT).show();
-        loadList(sharedPreferences);
+            DbOpertionsAysnc dbOpertionsAysnc=new DbOpertionsAysnc();
+            dbOpertionsAysnc.context=getBaseContext();
+            dbOpertionsAysnc.key=Integer.parseInt(sharedPreferences.getString(getString(R.string.movies_categories_key),"1"));
+
+            AsyncTask execute = dbOpertionsAysnc.execute();
+
+//            loadList(sharedPreferences);
+        }
     }
 
 
@@ -169,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     {
 //        movies_categories_key
 //        String t=sharedPreferences.getString(getString(R.string.movies_categories_key));
-        Toast.makeText(this, sharedPreferences.getString(getString(R.string.movies_categories_key),"1"), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, sharedPreferences.getString(getString(R.string.movies_categories_key),"1"), Toast.LENGTH_SHORT).show();
         String choice=sharedPreferences.getString(getString(R.string.movies_categories_key),"1");
         updateDb(choice);
     }
@@ -177,6 +173,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void updateDb(String choice)
     {
             getContentResolver().delete(Contract.PATH_TODOS_URI,null,null);
+
+
         try {
             recipe Recipe = Utils.returnRecipe(Integer.parseInt(choice));
 

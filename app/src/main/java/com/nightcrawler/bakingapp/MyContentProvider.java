@@ -122,20 +122,17 @@ package com.nightcrawler.bakingapp;
 
 //package me.indiandollar.apps.todoappcollectionwidget;
 
-        import android.content.ContentProvider;
-        import android.content.ContentUris;
-        import android.content.ContentValues;
-        import android.content.Context;
-        import android.content.UriMatcher;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.net.Uri;
-        import android.support.annotation.Nullable;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 
-        import com.nightcrawler.bakingapp.Contract;
-        import com.nightcrawler.bakingapp.DbHelper;
-
-        import java.util.Objects;
+import java.util.Objects;
 
 public class MyContentProvider extends ContentProvider {
 
@@ -187,7 +184,7 @@ public class MyContentProvider extends ContentProvider {
                 break;
         }
         if(retCursor!=null)
-        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        retCursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
 
         return retCursor;
     }
@@ -229,6 +226,32 @@ public class MyContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        int match = sUriMatcher.match(uri);
+
+//        Uri returnUri = null;
+
+        switch (match) {
+            case TODOS_CODE:
+
+                long id = db.delete(Contract.TABLE_NAME, selection, selectionArgs);
+                if(id>0)
+                    return 1;
+//                if(id > 0) {
+//                    returnUri = ContentUris.withAppendedId(Contract.PATH_TODOS_URI, id);
+//                }
+
+                break;
+            default:
+                break;
+        }
+
+        Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+
+//        return returnUri;
+
         return 0;
     }
 

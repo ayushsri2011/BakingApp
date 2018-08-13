@@ -28,28 +28,19 @@ import com.google.android.exoplayer2.util.Util;
 import org.json.JSONException;
 
 public class playVideo extends AppCompatActivity {
-    int k;
-    int currentPosition;
-    recipe Recipe;
-    TextView details;
-    String videoURL;
-    private SimpleExoPlayer player;
-    private PlayerView playerView;
-    private long playbackPosition = 0;
-    private int currentWindow = 0;
-    Point size;
-    private boolean playWhenReady = true;
+    int k;    int currentPosition;    recipe Recipe;    TextView details;    String videoURL;
+    private SimpleExoPlayer player;    private PlayerView playerView;    private long playbackPosition = 0;
+    private int currentWindow = 0;    Point size;    private boolean playWhenReady = true;
     Button prev_button, next_button;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
         java.util.Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        details = findViewById(R.id.details);
-        prev_button = findViewById(R.id.prev_button);
-        next_button = findViewById(R.id.prev_button);
-        playerView = findViewById(R.id.video_view);
+        details = findViewById(R.id.details);        prev_button = findViewById(R.id.prev_button);
+        next_button = findViewById(R.id.next_button);        playerView = findViewById(R.id.video_view);
 
         Intent i = getIntent();
         Bundle args = i.getBundleExtra("BUNDLE");
@@ -65,7 +56,7 @@ public class playVideo extends AppCompatActivity {
 
         videoURL = Recipe.rsteps.get(currentPosition - 1).videoURL;
 
-        startVideo();
+        startVideo(false);
 
 
         prev_button.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +66,11 @@ public class playVideo extends AppCompatActivity {
                 if (currentPosition == 1)
                     Toast.makeText(playVideo.this, "This is the first video", Toast.LENGTH_SHORT).show();
                 else {
+                    releasePlayer();
                     videoURL = "";
-                    --currentPosition;
+                    currentPosition=currentPosition-1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
-                    startVideo();
+                    startVideo(true);
                 }
             }
         });
@@ -91,17 +83,18 @@ public class playVideo extends AppCompatActivity {
                 if ((currentPosition + 1) == Recipe.rsteps.size())
                     Toast.makeText(playVideo.this, "This is the last video", Toast.LENGTH_SHORT).show();
                 else {
+                    releasePlayer();
                     videoURL = "";
-                    ++currentPosition;
+                    currentPosition=currentPosition+1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
-                    startVideo();
+                    startVideo(true);
                 }
             }
         });
     }
 
 
-    public void startVideo() {
+    public void startVideo(Boolean fromStart) {
         Display getOrient = getWindowManager().getDefaultDisplay();
         size = new Point();
         getOrient.getSize(size);
@@ -117,7 +110,7 @@ public class playVideo extends AppCompatActivity {
         else if (!URLUtil.isValidUrl(videoURL))
             Toast.makeText(this, "No video available", Toast.LENGTH_SHORT).show();
         else
-            initializePlayer();
+            initializePlayer(fromStart);
 
 
 
@@ -156,13 +149,18 @@ public class playVideo extends AppCompatActivity {
         }
     }
 
-    private void initializePlayer() {
+    private void initializePlayer(Boolean fromStart) {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this),
                     new DefaultTrackSelector(), new DefaultLoadControl());
 
             playerView.setPlayer(player);
-
+            if(fromStart)
+            {
+                playWhenReady=true;
+                        playbackPosition=0;
+                currentWindow=0;
+            }
             player.setPlayWhenReady(playWhenReady);
             player.seekTo(currentWindow, playbackPosition);
         }

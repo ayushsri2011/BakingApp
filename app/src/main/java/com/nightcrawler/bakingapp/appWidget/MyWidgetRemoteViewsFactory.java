@@ -34,7 +34,6 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
         widgetList = new ArrayList<>();
         widgetList.add(" ");
-//        Uri uri = Contract.PATH_TODOS_URI;
         try {
             Cursor cursor = mContext.getContentResolver().query(Contract.PATH_TODOS_URI, null, null,
                     null, null);
