@@ -86,11 +86,24 @@ public class DetailsActivity extends AppCompatActivity implements ListFragment.O
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            temp = savedInstanceState.getString("temp", temp);
-            DetailsFragment d = new DetailsFragment();
-            d.setT(temp);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.detailsContainer, d).commit();
+
+
+            if(findViewById(R.id.android_me_linear_layout)!=null) {
+                temp = savedInstanceState.getString("temp", temp);
+                DetailsFragment d = new DetailsFragment();
+                d.setT(temp);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.detailsContainer, d).commit();
+            }
+            else
+            {
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY", k);
+                ListFragment lf=new ListFragment();
+                lf.setArguments(bundle);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.master_list_fragment, lf).commit();
+            }
         }
 
     }
