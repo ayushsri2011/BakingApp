@@ -16,18 +16,5 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.nightcrawler.bakingapp", appContext.getPackageName());
-
-
-//        onView(withId(R.id.my_view)).perform(click()).check(matches(isDisplayed()));
-        // withId(R.id.my_view) is a ViewMatcher
-        // click() is a ViewAction
-        // matches(isDisplayed()) is a ViewAssertion
-
-    }
 }
