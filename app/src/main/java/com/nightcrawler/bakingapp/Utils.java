@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 public class Utils {
 
 
-    public static recipe returnRecipe(int k) {
+    public static recipe returnRecipe(int k) throws JSONException {
         ArrayList<recipeIngredients> recipeIngredientsArrayList = new ArrayList();
         ArrayList<recipeSteps> recipeStepsArrayList = new ArrayList();
         recipe Recipe = new recipe();
