@@ -27,20 +27,38 @@ import com.google.android.exoplayer2.util.Util;
 
 import org.json.JSONException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class playVideo extends AppCompatActivity {
-    int k;    int currentPosition;    recipe Recipe;    TextView details;    String videoURL;
-    private SimpleExoPlayer player;    private PlayerView playerView;    private long playbackPosition = 0;
+    int k;    int currentPosition;    recipe Recipe;
+    TextView details;    String videoURL;
+
+    private SimpleExoPlayer player;
+//    private PlayerView playerView;
+//    Button prev_button, next_button;
+    private long playbackPosition = 0;
     private int currentWindow = 0;    Point size;    private boolean playWhenReady = true;
-    Button prev_button, next_button;
+
+    @BindView(R.id.video_view) PlayerView playerView;
+    @BindView(R.id.prev_button) Button prev_button;
+    @BindView(R.id.next_button) Button next_button;
+    Bundle savedInstanceState2;
 
     @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        savedInstanceState2=savedInstanceState;
+
         setContentView(R.layout.activity_play_video);
+        ButterKnife.bind(this);
         java.util.Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        details = findViewById(R.id.details);        prev_button = findViewById(R.id.prev_button);
-        next_button = findViewById(R.id.next_button);        playerView = findViewById(R.id.video_view);
+        details = findViewById(R.id.details);
+//        prev_button = findViewById(R.id.prev_button);
+//        next_button = findViewById(R.id.next_button);
+//        playerView = findViewById(R.id.video_view);
 
         Intent i = getIntent();
         Bundle args = i.getBundleExtra("BUNDLE");
@@ -56,8 +74,7 @@ public class playVideo extends AppCompatActivity {
 
         videoURL = Recipe.rsteps.get(currentPosition - 1).videoURL;
 
-        startVideo(false);
-
+        startVideo();
 
         prev_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +85,9 @@ public class playVideo extends AppCompatActivity {
                 else {
                     releasePlayer();
                     videoURL = "";
-                    currentPosition=currentPosition-1;
+                    currentPosition = currentPosition - 1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
-                    startVideo(true);
+                    startVideo();
                 }
             }
         });
@@ -85,16 +102,16 @@ public class playVideo extends AppCompatActivity {
                 else {
                     releasePlayer();
                     videoURL = "";
-                    currentPosition=currentPosition+1;
+                    currentPosition = currentPosition + 1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
-                    startVideo(true);
+                    startVideo();
                 }
             }
         });
     }
 
 
-    public void startVideo(Boolean fromStart) {
+    public void startVideo() {
         Display getOrient = getWindowManager().getDefaultDisplay();
         size = new Point();
         getOrient.getSize(size);
@@ -106,14 +123,10 @@ public class playVideo extends AppCompatActivity {
 
         if (!Utils.checkConnectivity(playVideo.this)) {
             Toast.makeText(this, "No internet", Toast.LENGTH_SHORT).show();
-        }
-        else if (!URLUtil.isValidUrl(videoURL))
+        } else if (!URLUtil.isValidUrl(videoURL))
             Toast.makeText(this, "No video available", Toast.LENGTH_SHORT).show();
         else
-            initializePlayer(fromStart);
-
-
-
+            initializePlayer();
     }
 
     @Override
@@ -128,9 +141,9 @@ public class playVideo extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         hideSystemUi();
-//        if ((Util.SDK_INT <= 23 || player == null)) {
-//            initializePlayer();
-//        }
+        if ((Util.SDK_INT <= 23 || player == null)) {
+            initializePlayer();
+        }
     }
 
     @Override
@@ -149,26 +162,39 @@ public class playVideo extends AppCompatActivity {
         }
     }
 
-    private void initializePlayer(Boolean fromStart) {
+    private void initializePlayer() {
+
         if (player == null) {
+            Log.v("initializePlayer()--","player is Null");
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this),
                     new DefaultTrackSelector(), new DefaultLoadControl());
 
             playerView.setPlayer(player);
-            if(fromStart)
-            {
-                playWhenReady=true;
-                        playbackPosition=0;
-                currentWindow=0;
-            }
+
+            player.setPlayWhenReady(playWhenReady);
+            player.seekTo(currentWindow, playbackPosition);
+        }
+        else
+        {
+            Log.v("initializePlayer()--","player not Null");
             player.setPlayWhenReady(playWhenReady);
             player.seekTo(currentWindow, playbackPosition);
         }
 
+        if (savedInstanceState2 != null) {
+            playbackPosition = savedInstanceState2.getLong("playbackPosition",0);
+            currentWindow = savedInstanceState2.getInt("currentWindow",0);
+            playWhenReady = savedInstanceState2.getBoolean("playWhenReady",true);
+            Log.v("RestoreInstance","data retrieved");
+            Log.v("playbackPosition--",""+playbackPosition);
+            Log.v("currentWindow--",""+currentWindow);
+            Log.v("playWhenReady--",""+playWhenReady);
+            player.setPlayWhenReady(playWhenReady);
+            player.seekTo(currentWindow, playbackPosition);
+        }
 
         MediaSource mediaSource = buildMediaSource(Uri.parse(videoURL));
-//    MediaSource mediaSource = buildMediaSource(Uri.parse(getString(R.string.media_url_mp4)));
-        player.prepare(mediaSource, true, false);
+        player.prepare(mediaSource, false, false);
     }
 
     private void releasePlayer() {
@@ -215,4 +241,20 @@ public class playVideo extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.v("Ishi SaveInstance","data saved");
+        playbackPosition = player.getCurrentPosition();
+        currentWindow = player.getCurrentWindowIndex();
+        playWhenReady = player.getPlayWhenReady();
+        outState.putLong("playbackPosition",playbackPosition);
+        outState.putInt("currentWindow",currentWindow);
+        outState.putBoolean("playWhenReady",playWhenReady);
+        Log.v("onSaveInstanceState","");
+        Log.v("playbackPosition--",""+playbackPosition);
+        Log.v("currentWindow--",""+currentWindow);
+        Log.v("playWhenReady--",""+playWhenReady);
+    }
 }

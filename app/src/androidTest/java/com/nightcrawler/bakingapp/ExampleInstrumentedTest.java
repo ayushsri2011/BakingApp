@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -22,5 +22,12 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.nightcrawler.bakingapp", appContext.getPackageName());
+
+
+//        onView(withId(R.id.my_view)).perform(click()).check(matches(isDisplayed()));
+        // withId(R.id.my_view) is a ViewMatcher
+        // click() is a ViewAction
+        // matches(isDisplayed()) is a ViewAssertion
+
     }
 }

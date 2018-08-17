@@ -11,4 +11,38 @@
         android:layout_height="match_parent" />
 
 
+
+    <TextView
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="120sp"
+        android:background="#ffffff"
+        android:textColor="#536dfe"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/prev_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:text="@string/previous"
+            android:textColor="#536dfe" />
+
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#ffffff"
+            android:text="@string/next"
+            android:textColor="#536dfe" />
+
+    </RelativeLayout>
+
 </LinearLayout>

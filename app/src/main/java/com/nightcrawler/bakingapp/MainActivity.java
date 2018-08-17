@@ -19,22 +19,25 @@ import com.nightcrawler.bakingapp.appWidget.CollectionAppWidgetProvider;
 
 import org.json.JSONException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
 
     private Intent intent;
     private Bundle args;
     Toolbar toolbar;
+    @BindView(R.id.dish1) TextView t1;
+    @BindView(R.id.dish2) TextView t2;
+    @BindView(R.id.dish3) TextView t3;
+    @BindView(R.id.dish4) TextView t4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        TextView t1 = findViewById(R.id.dish1);
-        TextView t2 = findViewById(R.id.dish2);
-        TextView t3 = findViewById(R.id.dish3);
-        TextView t4 = findViewById(R.id.dish4);
-
+        ButterKnife.bind(this);
 
         intent = new Intent(MainActivity.this, DetailsActivity.class);
 
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 args.putInt("KEY", 1);
                 intent.putExtra("BUNDLE", args);
                 startActivity(intent);
-
             }
         });
         t2.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 startActivity(intent);
             }
         });
-
         t3.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -69,10 +70,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 args.putInt("KEY", 3);
                 intent.putExtra("BUNDLE", args);
                 startActivity(intent);
-
             }
         });
-
         t4.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
-        @Override
+    @Override
     public void onDestroy() {
         super.onDestroy();
         //unregister the preference change listener
