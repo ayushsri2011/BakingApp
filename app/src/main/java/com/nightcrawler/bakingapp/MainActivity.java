@@ -1,7 +1,6 @@
 package com.nightcrawler.bakingapp;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,11 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nightcrawler.bakingapp.appWidget.CollectionAppWidgetProvider;
-
 import org.json.JSONException;
-
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private Intent intent;
     private Bundle args;
-    Toolbar toolbar;
+    // --Commented out by Inspection (8/18/2018 11:41 PM):Toolbar toolbar;
     @BindView(R.id.dish1)
     TextView t1;
     @BindView(R.id.dish2)
