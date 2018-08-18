@@ -22,7 +22,7 @@ public class Test3 {
             new ActivityTestRule(DetailsActivity.class, true, false);
 
     @Test
-    public void demonstrateIntentPrep() {
+    public void testIntentDetailsActivity() {
         Bundle args = new Bundle();
         args.putInt("KEY", 1);
 
