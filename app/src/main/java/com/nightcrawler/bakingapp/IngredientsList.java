@@ -32,7 +32,9 @@ public class IngredientsList extends AppCompatActivity {
         int k = args.getInt("KEY", 1);
 
         try {
-            Recipe = Utils.returnRecipe(k);
+            String resp=Utils.prefResponse(getBaseContext());
+            Recipe = Utils.returnRecipe(k,resp);
+//            Recipe = Utils.returnRecipe(k);
         } catch (JSONException e) {
             e.printStackTrace();
         }
