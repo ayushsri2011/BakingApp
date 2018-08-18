@@ -2,8 +2,10 @@ package com.nightcrawler.bakingapp;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,21 +18,23 @@ import java.util.concurrent.ExecutionException;
 public class Utils {
 
 
-    public static recipe returnRecipe(int k) throws JSONException {
+    public static recipe returnRecipe(int k,String response) throws JSONException {
         ArrayList<recipeIngredients> recipeIngredientsArrayList = new ArrayList();
         ArrayList<recipeSteps> recipeStepsArrayList = new ArrayList();
         recipe Recipe = new recipe();
+
         try {
-            String address="https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-            Query q = new Query();
-            try {
-                q.execute(address).get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
 
-            final JSONArray jsonArray = new JSONArray(q.local_response);
+//            String address="https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+//            Query q = new Query();
+//            try {
+//                q.execute(address).get();
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
 
+//            final JSONArray jsonArray = new JSONArray(q.local_response);
+            final JSONArray jsonArray = new JSONArray(response);
 
             int i = k - 1;
 
@@ -69,6 +73,12 @@ public class Utils {
         }
         return Recipe;
 
+    }
+
+
+    public static String prefResponse(Context context)    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString("jsonresponse", "");
     }
 
     public static boolean checkConnectivity(Context context){
