@@ -20,13 +20,11 @@ public class Test2 {
 
 
     @Test
-    public void ensureTextChangesWork() {
+    public void AdapterViewTest() {
 
-
-//    onData(anything()).inAdapterView(withId(R.id.tea_grid_view)).atPosition(1).perform(click());
-
-         //Checks that the OrderActivity opens with the correct tea name displayed
-//    onView(withId(R.id.tea_name_text_view)).check(matches(withText(TEA_NAME)));
+    onView(withId(R.id.dish1)).perform(click());
+    onData(anything()).inAdapterView(withId(R.id.listView1)).atPosition(1).perform(click());
+    onData(anything()).inAdapterView(withId(R.id.listView2)).atPosition(1).check(matches(withText("Graham Cracker crumbs-2 CUP")));
 
     }
 }
