@@ -43,7 +43,7 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
 
                 cursor.moveToFirst();
                 if (cursor.getCount() == 0) {
-                widgetList.add("No entry");
+                widgetList.add("Select fav dish from app");
             } else {
                 cursor.moveToFirst();
                 for (int i = 0; i < cursor.getCount(); i++) {
@@ -54,13 +54,13 @@ public class MyWidgetRemoteViewsFactory implements RemoteViewsService.RemoteView
             cursor.close();
         }
         else
-                widgetList.add("No entry ");
+                widgetList.add("Select fav dish from app ");
         } catch (Exception e) {
             Log.v("Failed to fetch values", "Fail");
             e.printStackTrace();
-            String[] widgetFruitsArray = {"String 1", "String 2", "String 3"};
-            Log.v("Finally Section Run", "");
-            this.widgetList = new ArrayList<>(Arrays.asList(widgetFruitsArray));
+//            String[] widgetFruitsArray = {"String 1", "String 2", "String 3"};
+//            Log.v("Finally Section Run", "");
+//            this.widgetList = new ArrayList<>(Arrays.asList(widgetFruitsArray));
         }
 
 

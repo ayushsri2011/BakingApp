@@ -33,6 +33,11 @@
             android:text="@string/previous"
             android:textColor="#536dfe" />
 
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/thumbnail"/>
 
         <Button
             android:id="@+id/next_button"
