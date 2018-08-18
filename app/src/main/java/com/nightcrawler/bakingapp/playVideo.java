@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
@@ -43,6 +45,7 @@ public class playVideo extends AppCompatActivity {
     @BindView(R.id.video_view) PlayerView playerView;
     @BindView(R.id.prev_button) Button prev_button;
     @BindView(R.id.next_button) Button next_button;
+    @BindView(R.id.thumbnail) ImageView img;
     Bundle savedInstanceState2;
 
     @SuppressLint("CutPasteId")
@@ -67,7 +70,8 @@ public class playVideo extends AppCompatActivity {
         Log.v("currenPosition", "" + currentPosition);
 
         try {
-            Recipe = Utils.returnRecipe(k);
+            String resp=Utils.prefResponse(this);
+            Recipe = Utils.returnRecipe(k,resp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -75,6 +79,16 @@ public class playVideo extends AppCompatActivity {
         videoURL = Recipe.rsteps.get(currentPosition - 1).videoURL;
 
         startVideo();
+
+//      set thumbnail
+        String url=Recipe.rsteps.get(currentPosition-1).thumbnailURL;
+        if(!url.equals("") && !(" ".equals(url)))
+        Picasso.get().load(url).placeholder(R.drawable.tea).into(img);
+        else
+            img.setImageResource(R.drawable.tea);
+
+
+
 
         prev_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +102,12 @@ public class playVideo extends AppCompatActivity {
                     currentPosition = currentPosition - 1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
                     startVideo();
+                    //reset thumbnail
+                    String url=Recipe.rsteps.get(currentPosition).thumbnailURL;
+                    if(!url.equals("") && !(" ".equals(url)))
+                        Picasso.get().load(url).placeholder(R.drawable.tea).into(img);
+                    else
+                        img.setImageResource(R.drawable.tea);
                 }
             }
         });
@@ -105,6 +125,12 @@ public class playVideo extends AppCompatActivity {
                     currentPosition = currentPosition + 1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
                     startVideo();
+                    //reset thumbnail
+                    String url=Recipe.rsteps.get(currentPosition).thumbnailURL;
+                    if(!url.equals("") && !(" ".equals(url)))
+                        Picasso.get().load(url).placeholder(R.drawable.tea).into(img);
+                    else
+                        img.setImageResource(R.drawable.tea);
                 }
             }
         });
