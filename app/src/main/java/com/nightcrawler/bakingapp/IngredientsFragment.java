@@ -33,7 +33,8 @@ public class IngredientsFragment extends Fragment {
         if (bundle != null)
             k = bundle.getInt("KEY");
         try {
-            Recipe = Utils.returnRecipe(k);
+            String resp=Utils.prefResponse(getContext());
+            Recipe = Utils.returnRecipe(k,resp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
