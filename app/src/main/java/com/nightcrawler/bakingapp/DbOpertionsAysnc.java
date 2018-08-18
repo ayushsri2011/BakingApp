@@ -11,26 +11,33 @@ import org.json.JSONException;
 
 import java.util.Objects;
 
-public class DbOpertionsAysnc extends AsyncTask {
+public class DbOpertionsAysnc extends AsyncTask<String,String,String> {
 
     int key;
     Context context;
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(String... params) {
 
-
+        Log.v("DbOps","doInBackground thread");
         recipe Recipe = null;
+//        String resp = params[0];
         try {
-            Recipe = Utils.returnRecipe(key);
+            String resp=Utils.prefResponse(context);
+            Recipe = Utils.returnRecipe(key,resp);
+
+
+//            Recipe = Utils.returnRecipe(key,resp);
+        Log.v("DbOps","Recipe received");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
+
+        assert Recipe != null;
         int test=context.getContentResolver().delete(Contract.PATH_TODOS_URI,null,null);
         if(test==1)
             Log.v("DbOps","Deletion Successful");
-
-        assert Recipe != null;
         for(int i = 0; i< Objects.requireNonNull(Recipe).rsteps.size(); i++)
         {
             ContentValues contentValues = new ContentValues();
