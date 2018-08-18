@@ -14,6 +14,13 @@ import java.net.URL;
 public class Query extends AsyncTask<String, String, String> {
 
     public String local_response;
+    private OnTaskCompleted taskCompleted;
+
+
+    public Query(OnTaskCompleted activityContext){
+        this.taskCompleted = activityContext;
+    }
+
 
     @Override
     protected String doInBackground(String... params) {
@@ -67,6 +74,7 @@ public class Query extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
+        taskCompleted.onTaskCompleted(local_response);
         Log.v("onPostExecute:::", result);
     }
 }
