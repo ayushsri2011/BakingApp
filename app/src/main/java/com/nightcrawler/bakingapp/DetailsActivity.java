@@ -28,18 +28,19 @@ public class DetailsActivity extends AppCompatActivity implements ListFragment.O
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-
+        setContentView(R.layout.activity_details);
         Intent i = getIntent();
         Bundle args = i.getBundleExtra("BUNDLE");
         k = args.getInt("KEY", 1);
 
         try {
-            Recipe = Utils.returnRecipe(k);
+            String resp=Utils.prefResponse(this);
+            Recipe = Utils.returnRecipe(k,resp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        setContentView(R.layout.activity_details);
+
         Bundle bundle = new Bundle();
         bundle.putInt("KEY", k);
 
