@@ -74,7 +74,6 @@ public class Utils {
 
     }
 
-
     public static String prefResponse(Context context)    {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getString("jsonresponse", "");
@@ -110,18 +109,5 @@ public class Utils {
         return al;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
