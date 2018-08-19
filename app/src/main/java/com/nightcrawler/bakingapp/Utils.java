@@ -92,4 +92,36 @@ public class Utils {
         }
     }
 
+    public static ArrayList<String> returnDishList(String response) throws JSONException {
+        ArrayList<String> al=new ArrayList();
+        try {
+
+            final JSONArray jsonArray = new JSONArray(response);
+
+            int ix=jsonArray.length();
+
+            for(int hg=0;hg<ix;hg++) {
+                JSONObject obj = jsonArray.getJSONObject(hg);
+                al.add(obj.getString("name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return al;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
