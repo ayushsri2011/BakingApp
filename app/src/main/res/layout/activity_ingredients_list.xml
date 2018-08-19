@@ -6,11 +6,19 @@
     tools:context=".IngredientsList">
 
 
-    <ListView
-        android:id="@+id/listView2"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bohe"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:padding="5dp"
-        android:textColor="#536dfe" />
+        android:layout_height="match_parent"/>
+
+
+    <!--<ListView-->
+        <!--android:id="@+id/listView2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#ffffff"-->
+        <!--android:padding="5dp"-->
+        <!--android:textColor="#536dfe" />-->
 </LinearLayout>
