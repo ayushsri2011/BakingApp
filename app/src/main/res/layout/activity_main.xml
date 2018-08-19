@@ -27,6 +27,9 @@
             android:textSize="40sp" />
     </LinearLayout>
 
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,62 +38,84 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dish1"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bohe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:padding="3sp"
-            android:text="@string/nutella_pie"
-            android:textAlignment="center"
-
-            android:textColor="#536dfe"
-            android:textSize="28sp" />
-
-        <TextView
-            android:id="@+id/dish2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:padding="3sp"
-            android:text="@string/brownies"
-            android:textAlignment="center"
-            android:background="#ffffff"
-            android:textColor="#536dfe"
-            android:textSize="28sp" />
-
-        <TextView
-            android:id="@+id/dish3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:padding="3sp"
-            android:text="@string/yellow_cake"
-            android:textAlignment="center"
-
-            android:textColor="#536dfe"
-            android:textSize="28sp" />
-
-        <TextView
-            android:id="@+id/dish4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:padding="3sp"
-            android:text="@string/cheesecake"
-            android:textAlignment="center"
-            android:textColor="#536dfe"
-            android:textSize="28sp"
-
-            />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
+
+
+
+
+
+
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
+<!---->
+        <!--<TextView-->
+            <!--android:id="@+id/dish1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#ffffff"-->
+            <!--android:padding="3sp"-->
+            <!--android:text="@string/nutella_pie"-->
+            <!--android:textAlignment="center"-->
+<!---->
+            <!--android:textColor="#536dfe"-->
+            <!--android:textSize="28sp" />-->
+<!---->
+        <!--<TextView-->
+            <!--android:id="@+id/dish2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:padding="3sp"-->
+            <!--android:text="@string/brownies"-->
+            <!--android:textAlignment="center"-->
+            <!--android:background="#ffffff"-->
+            <!--android:textColor="#536dfe"-->
+            <!--android:textSize="28sp" />-->
+<!---->
+        <!--<TextView-->
+            <!--android:id="@+id/dish3"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#ffffff"-->
+            <!--android:padding="3sp"-->
+            <!--android:text="@string/yellow_cake"-->
+            <!--android:textAlignment="center"-->
+<!---->
+            <!--android:textColor="#536dfe"-->
+            <!--android:textSize="28sp" />-->
+<!---->
+        <!--<TextView-->
+            <!--android:id="@+id/dish4"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#ffffff"-->
+            <!--android:padding="3sp"-->
+            <!--android:text="@string/cheesecake"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="#536dfe"-->
+            <!--android:textSize="28sp"-->
+<!---->
+            <!--/>-->
+<!---->
+    <!--</LinearLayout>-->
 
 </LinearLayout>
