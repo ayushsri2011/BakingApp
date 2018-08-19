@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,9 +50,11 @@
                 android:resource="@xml/collection_widget" />
         </receiver>
 
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/action_settings"/>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>
