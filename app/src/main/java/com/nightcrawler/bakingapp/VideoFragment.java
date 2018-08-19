@@ -60,8 +60,10 @@ public class VideoFragment extends Fragment {
 
         Log.v("videoURL", videoURL);
 
-        if (URLUtil.isValidUrl(videoURL))
+        if (URLUtil.isValidUrl(videoURL)) {
             initializePlayer();
+            Toast.makeText(getContext(), "Loading Video", Toast.LENGTH_SHORT).show();
+        }
         else
             Toast.makeText(getContext(), "No video available", Toast.LENGTH_SHORT).show();
 
@@ -135,9 +137,9 @@ public class VideoFragment extends Fragment {
         playbackPosition = player.getCurrentPosition();
         currentWindow = player.getCurrentWindowIndex();
         playWhenReady = player.getPlayWhenReady();
-        Log.v("Ishi playbackPosition--",""+playbackPosition);
-        Log.v("Ishi currentWindow--",""+currentWindow);
-        Log.v("Ishi playWhenReady--",""+playWhenReady);
+        Log.v(" playbackPosition--",""+playbackPosition);
+        Log.v(" currentWindow--",""+currentWindow);
+        Log.v(" playWhenReady--",""+playWhenReady);
 
         //player.setPlayWhenReady();
         if (Util.SDK_INT <= 23) {
@@ -175,7 +177,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.v("Ishi SaveInstance","data saved");
+        Log.v(" SaveInstance","data saved");
         playbackPosition = player.getCurrentPosition();
         currentWindow = player.getCurrentWindowIndex();
         playWhenReady = player.getPlayWhenReady();
