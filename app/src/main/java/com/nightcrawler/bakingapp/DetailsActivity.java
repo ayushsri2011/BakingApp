@@ -164,6 +164,16 @@ public class DetailsActivity extends AppCompatActivity implements ListFragment.O
     @Override
     protected void onPause() {
         super.onPause();
-        Log.v("ishi","DetailsActivity onPause()");
+        Log.v("DetailsActivity","DetailsActivity onPause()");
+    }
+
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
