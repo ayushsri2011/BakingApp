@@ -38,13 +38,13 @@ public class DbOpertionsAysnc extends AsyncTask<String,String,String> {
         int test=context.getContentResolver().delete(Contract.PATH_TODOS_URI,null,null);
         if(test==1)
             Log.v("DbOps","Deletion Successful");
-        for(int i = 0; i< Objects.requireNonNull(Recipe).rsteps.size(); i++)
+        for(int i = 0; i< Objects.requireNonNull(Recipe).rIngredients.size(); i++)
         {
             ContentValues contentValues = new ContentValues();
             if(i==0)
                 contentValues.put(Contract.COL_TODO_TEXT,Recipe.getName());
             else
-                contentValues.put(Contract.COL_TODO_TEXT,Recipe.rsteps.get(i).description);
+                contentValues.put(Contract.COL_TODO_TEXT,Recipe.rIngredients.get(i).ingredient);
 
             context.getContentResolver().insert(Contract.PATH_TODOS_URI, contentValues);
         }
