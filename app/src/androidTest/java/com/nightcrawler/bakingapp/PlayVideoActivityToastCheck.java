@@ -19,8 +19,9 @@ public class PlayVideoActivityToastCheck {
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule
             =new ActivityTestRule<>(MainActivity.class);
 
-    //testing to check ingredients displayed for the recipes in the PlayVideoActivity
+    //testing to check ingredients displayed for the recipes
     //ensure net is available
+    //ONLY FOR TESTING ON PHONES AND NOT TABS
 
     @Test
     public void checkIngredientsExist1() {
@@ -57,8 +58,8 @@ public class PlayVideoActivityToastCheck {
         onView(withText("Brownies")).perform(click());
         onView(withText("Recipe Ingredients")).perform(click());
         onView(withText("Recipe Ingredients")).perform(click());
-        onView(withText("Bittersweet chocolate (60-70% cacao)-350 G")).check(matches(isDisplayed()));
-        onView(withText("unsalted butter-226 G")).check(matches(isDisplayed()));
+        onView(withText("Bittersweet chocolate (60-70% cacao)- CUP")).check(matches(isDisplayed()));
+        onView(withText("unsalted butter, melted-6 TBLSP")).check(matches(isDisplayed()));
 
     }
 
