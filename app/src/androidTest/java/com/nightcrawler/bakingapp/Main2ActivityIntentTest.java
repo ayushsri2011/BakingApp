@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class Main2ActivityIntentTest {
 
     //Testing Launch of Main2Activity from MainActivity
-
+    //Test can be run on both Mobile and Tabs(600dp or more)
     @Rule
     public ActivityTestRule<Main2Activity> rule =
             new ActivityTestRule(Main2Activity.class, true, false);
