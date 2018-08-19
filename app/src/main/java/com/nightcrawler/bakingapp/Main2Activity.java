@@ -21,6 +21,7 @@ public class Main2Activity extends AppCompatActivity {
 
     @BindView(R.id.bohe)
     RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,25 +36,23 @@ public class Main2Activity extends AppCompatActivity {
 
 //        ArrayList<String> List=new ArrayList();
         try {
-            String resp=Utils.prefResponse(this);
-            Recipe=Utils.returnRecipe(k,resp);
+            String resp = Utils.prefResponse(this);
+            Recipe = Utils.returnRecipe(k, resp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ArrayList<String> optionslist=new ArrayList<>();
+        ArrayList<String> optionslist = new ArrayList<>();
         optionslist.add("Recipe Ingredients");
 
-        for(int q=0;q<Recipe.rsteps.size();q++)
-        {
-            optionslist.add((q+1)+". "+Recipe.rsteps.get(q).shortDescription);
+        for (int q = 0; q < Recipe.rsteps.size(); q++) {
+            optionslist.add(Recipe.rsteps.get(q).shortDescription);
         }
 
         recyclerView.setLayoutManager(new GridLayoutManager(Main2Activity.this, 2));
-        adapter=new CustomAdapter(this);
+        adapter = new CustomAdapter(this);
         adapter.setStage(1);
         adapter.setKey(k);
         populateRecyclerViewValues(optionslist);
-
 
 
     }
