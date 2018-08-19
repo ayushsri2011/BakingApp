@@ -22,6 +22,21 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private ArrayList<String> list_members = new ArrayList<>();
     private final LayoutInflater inflater;
     private Context context;
+    private int stage;
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    private int key;
+
+    public void setStage(int stage) {
+        this.stage = stage;
+        //0 means present at MainActivity
+        //1 means present at MainActivity2
+    }
+
+
 
     public CustomAdapter(Context context) {
         this.context = context;
@@ -74,14 +89,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             
             if(Utils.checkConnectivity(context)) {
                 int pos = getAdapterPosition();
-                Intent intent = new Intent(context, DetailsActivity.class);
-
+                Intent intent;
                 Bundle args = new Bundle();
-                args.putInt("KEY", (pos+1));
+                if(stage==0)
+                {
+                    intent = new Intent(context, Main2Activity.class);
+                    args.putInt("KEY", (pos+1));}
+                else
+                {
+                    intent = new Intent(context, DetailsActivity.class);
+                    args.putInt("KEY", key);
+                }
+
                 intent.putExtra("BUNDLE", args);
-//                Bundle args = new Bundle();
-//                args.putInt("KEY", pos);
-//                intent.putExtra("BUNDLE", args);
                 context.startActivity(intent);
             }
             else
