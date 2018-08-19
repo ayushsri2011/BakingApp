@@ -3,10 +3,13 @@ package com.nightcrawler.bakingapp;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,95 +30,112 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     private Intent intent;
     private Bundle args;
+//    private RecyclerView recyclerView;
+    private CustomAdapter adapter;
+    private ArrayList<String> dishList;
     // --Commented out by Inspection (8/18/2018 11:41 PM):Toolbar toolbar;
-    @BindView(R.id.dish1)
-    TextView t1;
-    @BindView(R.id.dish2)
-    TextView t2;
-    @BindView(R.id.dish3)
-    TextView t3;
-    @BindView(R.id.dish4)
-    TextView t4;
-
+//    @BindView(R.id.dish1)
+//    TextView t1;
+//    @BindView(R.id.dish2)
+//    TextView t2;
+//    @BindView(R.id.dish3)
+//    TextView t3;
+//    @BindView(R.id.dish4)
+//    TextView t4;
+    @BindView(R.id.bohe)
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
+        Resources res = getBaseContext().getResources();
+        String address= res.getString(R.string.address);
         SharedPreferences sharedPreferences = getSharedPreferences("firstStart", 0);
         boolean firstStart = sharedPreferences.getBoolean("firstStart", true);
 
 
-        intent = new Intent(MainActivity.this, DetailsActivity.class);
-
-        t1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Utils.checkConnectivity(getBaseContext())) {
-                    args = new Bundle();
-                    args.putInt("KEY", 1);
-                    intent.putExtra("BUNDLE", args);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
-            }
-        });
-        t2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Utils.checkConnectivity(getBaseContext())) {
-                    Bundle args = new Bundle();
-                    args.putInt("KEY", 2);
-                    intent.putExtra("BUNDLE", args);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
-            }
-        });
-        t3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Utils.checkConnectivity(getBaseContext())) {
-                    Log.v("t3", "");
-                    args = new Bundle();
-                    args.putInt("KEY", 3);
-                    intent.putExtra("BUNDLE", args);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
-            }
-        });
-        t4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Utils.checkConnectivity(getBaseContext())) {
-                    args = new Bundle();
-                    args.putInt("KEY", 4);
-                    intent.putExtra("BUNDLE", args);
-                    startActivity(intent);
-                } else
-                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (Utils.checkConnectivity(this)) {
+            Query q = new Query(MainActivity.this);
+            q.execute(address);
+        }
+        else
+            Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
 
 
+//        intent = new Intent(MainActivity.this, DetailsActivity.class);
+
+//        t1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Utils.checkConnectivity(getBaseContext())) {
+//                    args = new Bundle();
+//                    args.putInt("KEY", 1);
+//                    intent.putExtra("BUNDLE", args);
+//                    startActivity(intent);
+//                } else
+//                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        t2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Utils.checkConnectivity(getBaseContext())) {
+//                    Bundle args = new Bundle();
+//                    args.putInt("KEY", 2);
+//                    intent.putExtra("BUNDLE", args);
+//                    startActivity(intent);
+//                } else
+//                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        t3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Utils.checkConnectivity(getBaseContext())) {
+//                    Log.v("t3", "");
+//                    args = new Bundle();
+//                    args.putInt("KEY", 3);
+//                    intent.putExtra("BUNDLE", args);
+//                    startActivity(intent);
+//                } else
+//                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        t4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (Utils.checkConnectivity(getBaseContext())) {
+//                    args = new Bundle();
+//                    args.putInt("KEY", 4);
+//                    intent.putExtra("BUNDLE", args);
+//                    startActivity(intent);
+//                } else
+//                    Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
-        if (firstStart) {
+        try {
+            dishList=Utils.returnDishList(Utils.prefResponse(this));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-            String address = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-            if (Utils.checkConnectivity(this)) {
-                Query q = new Query(MainActivity.this);
-                q.execute(address);
-            }
-            else
-                Toast.makeText(MainActivity.this, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
+        recyclerView= findViewById(R.id.bohe);
 
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+        adapter=new CustomAdapter(this);
+        populateRecyclerViewValues(dishList);
+
+
+
+
+
+//            String address = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
 //            CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
-        }
 
 
     }
@@ -170,36 +192,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-
-    private void loadList(SharedPreferences sharedPreferences) {
-//        movies_categories_key
-//        String t=sharedPreferences.getString(getString(R.string.movies_categories_key));
-//        Toast.makeText(this, sharedPreferences.getString(getString(R.string.movies_categories_key),"1"), Toast.LENGTH_SHORT).show();
-        String choice = sharedPreferences.getString(getString(R.string.movies_categories_key), "1");
-        updateDb(choice);
-    }
-
-    private void updateDb(String choice) {
-        getContentResolver().delete(Contract.PATH_TODOS_URI, null, null);
-
-
-        try {
-            String resp = Utils.prefResponse(this);
-            recipe Recipe = Utils.returnRecipe(Integer.parseInt(choice), resp);
-
-            for (int i = 0; i < Recipe.rsteps.size(); i++) {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(Contract.COL_TODO_TEXT, Recipe.rsteps.get(i).description);
-                getContentResolver().insert(Contract.PATH_TODOS_URI, contentValues);
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public void onTaskCompleted(String response) {
 
@@ -213,5 +205,37 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
     }
 
+    private void populateRecyclerViewValues(ArrayList<String> dishList) {
 
+        adapter.setListContent(dishList);
+        recyclerView.setAdapter(adapter);
+    }
+
+//    private void loadList(SharedPreferences sharedPreferences) {
+////        movies_categories_key
+////        String t=sharedPreferences.getString(getString(R.string.movies_categories_key));
+////        Toast.makeText(this, sharedPreferences.getString(getString(R.string.movies_categories_key),"1"), Toast.LENGTH_SHORT).show();
+//        String choice = sharedPreferences.getString(getString(R.string.movies_categories_key), "1");
+//        updateDb(choice);
+//    }
+
+//    private void updateDb(String choice) {
+//        getContentResolver().delete(Contract.PATH_TODOS_URI, null, null);
+//
+//
+//        try {
+//            String resp = Utils.prefResponse(this);
+//            recipe Recipe = Utils.returnRecipe(Integer.parseInt(choice), resp);
+//
+//            for (int i = 0; i < Recipe.rsteps.size(); i++) {
+//                ContentValues contentValues = new ContentValues();
+//                contentValues.put(Contract.COL_TODO_TEXT, Recipe.rsteps.get(i).description);
+//                getContentResolver().insert(Contract.PATH_TODOS_URI, contentValues);
+//            }
+//
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
