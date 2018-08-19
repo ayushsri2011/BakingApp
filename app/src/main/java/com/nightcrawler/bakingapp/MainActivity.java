@@ -116,18 +116,9 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 //            }
 //        });
 
+//        recyclerView= findViewById(R.id.bohe);
 
-        try {
-            dishList=Utils.returnDishList(Utils.prefResponse(this));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        recyclerView= findViewById(R.id.bohe);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-        adapter=new CustomAdapter(this);
-        populateRecyclerViewValues(dishList);
 
 
 
@@ -138,7 +129,37 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 //            CollectionAppWidgetProvider.sendRefreshBroadcast(getBaseContext());
 
 
+
+        try {
+            dishList=Utils.returnDishList(Utils.prefResponse(this));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+        adapter=new CustomAdapter(this);
+        populateRecyclerViewValues(dishList);
     }
+
+    public void startRV()
+    {
+        try {
+            dishList=Utils.returnDishList(Utils.prefResponse(this));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+        adapter=new CustomAdapter(this);
+        adapter.setStage(0);
+        populateRecyclerViewValues(dishList);
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -202,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         editor.apply();
         editor.putBoolean("firstStart", false);
         editor.apply();
+        startRV();
 
     }
 
