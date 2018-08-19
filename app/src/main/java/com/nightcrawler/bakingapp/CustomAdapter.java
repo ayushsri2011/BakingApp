@@ -91,18 +91,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 int pos = getAdapterPosition();
                 Intent intent;
                 Bundle args = new Bundle();
-                if(stage==0)
-                {
+                if(stage==0) {
                     intent = new Intent(context, Main2Activity.class);
-                    args.putInt("KEY", (pos+1));}
-                else
+                    args.putInt("KEY", (pos + 1));
+                    intent.putExtra("BUNDLE", args);
+                    context.startActivity(intent);
+                }
+                else if(stage==1)
                 {
                     intent = new Intent(context, DetailsActivity.class);
                     args.putInt("KEY", key);
+                    intent.putExtra("BUNDLE", args);
+                    context.startActivity(intent);
                 }
 
-                intent.putExtra("BUNDLE", args);
-                context.startActivity(intent);
             }
             else
                 Toast.makeText(context, "Ensure data connectivity", Toast.LENGTH_SHORT).show();
