@@ -11,7 +11,7 @@
         android:background="#ffffff"
         android:text="@string/test"
         android:textColor="#536dfe"
-        android:textSize="17sp" />
+        android:textSize="15sp" />
 
 
 </LinearLayout>
