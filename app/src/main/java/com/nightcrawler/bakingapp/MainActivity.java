@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
 
 
-        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
         adapter=new CustomAdapter(this);
         adapter.setStage(0);
         populateRecyclerViewValues(dishList);
