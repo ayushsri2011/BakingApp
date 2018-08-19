@@ -17,7 +17,7 @@ public class DataConnectivityToastMainActivityTest {
     public ActivityTestRule<MainActivity> mainActivityActivityTestRule
             =new ActivityTestRule<>(MainActivity.class);
 
-    //Run only with Airplne Mode
+    //Run only with Airplane Mode
     //Test can be run on both Mobile and Tabs(600dp or more)
     @Test
     public void checkStartupToast() {
