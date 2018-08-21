@@ -17,7 +17,7 @@ public class Query extends AsyncTask<String, String, String> {
     private OnTaskCompleted taskCompleted;
 
 
-    public Query(OnTaskCompleted activityContext){
+    public Query(OnTaskCompleted activityContext) {
         this.taskCompleted = activityContext;
     }
 
@@ -44,11 +44,9 @@ public class Query extends AsyncTask<String, String, String> {
             reader = new BufferedReader(new InputStreamReader(stream));
             Log.v("reader", reader.toString());
 
-
             while ((line = reader.readLine()) != null) {
                 line2.append(line);
             }
-
 
             local_response = line2.toString();
 
