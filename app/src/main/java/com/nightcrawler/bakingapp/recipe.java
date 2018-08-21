@@ -26,16 +26,8 @@ public class recipe {
         this.name = name;
     }
 
-    public ArrayList<recipeIngredients> getrIngredients() {
-        return rIngredients;
-    }
-
     public void setrIngredients(ArrayList<recipeIngredients> rIngredients) {
         this.rIngredients = rIngredients;
-    }
-
-    public ArrayList<recipeSteps> getRsteps() {
-        return rsteps;
     }
 
     public void setRsteps(ArrayList<recipeSteps> rsteps) {
