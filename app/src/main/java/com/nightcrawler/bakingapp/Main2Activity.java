@@ -34,7 +34,6 @@ public class Main2Activity extends AppCompatActivity {
         int k = args.getInt("KEY", 1);
 
 
-//        ArrayList<String> List=new ArrayList();
         try {
             String resp = Utils.prefResponse(this);
             Recipe = Utils.returnRecipe(k, resp);
