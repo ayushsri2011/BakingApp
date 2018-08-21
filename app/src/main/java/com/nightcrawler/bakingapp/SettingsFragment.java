@@ -17,12 +17,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        //add xml
         addPreferencesFromResource(R.xml.preferences);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sharedPreferences.getBoolean("show_bass",true);
-
 
         SharedPreferences sharedPreferences1=getPreferenceScreen().getSharedPreferences();
         android.support.v7.preference.PreferenceScreen preferenceScreen=getPreferenceScreen();
@@ -36,13 +34,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 setPreferenceSummary(p,value);
             }
         }
-        //to write in shared preferences
-        //SharedPreferences.Editor editor=sharedPreferences.edit();
-        //editor.putBoolean("show_bass",false);
-//        editor.apply();
-
-
-//        onSharedPreferenceChanged(sharedPreferences, getString(R.string.movies_categories_key));
     }
 
 
@@ -55,8 +46,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         {
         listPreference.setSummary(listPreference.getEntries()[prefIndex]);
         }
-
-
         }
     }
 
@@ -87,8 +76,3 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 }
-
-
-
-
-
