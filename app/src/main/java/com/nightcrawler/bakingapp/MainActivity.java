@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private CustomAdapter adapter;
     private ArrayList<String> dishList;
     // --Commented out by Inspection (8/18/2018 11:41 PM):Toolbar toolbar;
-//    @BindView(R.id.dish1)    TextView t1;
-//    @BindView(R.id.dish2)    TextView t2;
-//    @BindView(R.id.dish3)    TextView t3;
-//    @BindView(R.id.dish4)    TextView t4;
     @BindView(R.id.bohe)
     RecyclerView recyclerView;
 
