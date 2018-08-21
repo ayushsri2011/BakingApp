@@ -37,8 +37,6 @@ public class playVideo extends AppCompatActivity {
     TextView details;    String videoURL;
 
     private SimpleExoPlayer player;
-//    private PlayerView playerView;
-//    Button prev_button, next_button;
     private long playbackPosition = 0;
     private int currentWindow = 0;    Point size;    private boolean playWhenReady = true;
 
@@ -59,9 +57,6 @@ public class playVideo extends AppCompatActivity {
         ButterKnife.bind(this);
         java.util.Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         details = findViewById(R.id.details);
-//        prev_button = findViewById(R.id.prev_button);
-//        next_button = findViewById(R.id.next_button);
-//        playerView = findViewById(R.id.video_view);
 
         Intent i = getIntent();
         Bundle args = i.getBundleExtra("BUNDLE");
@@ -80,7 +75,6 @@ public class playVideo extends AppCompatActivity {
 
         startVideo();
 
-//      set thumbnail
         String url=Recipe.rsteps.get(currentPosition-1).thumbnailURL;
         if(!url.equals("") && !(" ".equals(url)))
         Picasso.get().load(url).placeholder(R.drawable.tea).into(img);
@@ -125,7 +119,6 @@ public class playVideo extends AppCompatActivity {
                     currentPosition = currentPosition + 1;
                     videoURL = Recipe.rsteps.get(currentPosition).videoURL;
                     startVideo();
-                    //reset thumbnail
                     String url=Recipe.rsteps.get(currentPosition).thumbnailURL;
                     if(!url.equals("") && !(" ".equals(url)))
                         Picasso.get().load(url).placeholder(R.drawable.tea).into(img);
@@ -158,9 +151,6 @@ public class playVideo extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        if (Util.SDK_INT > 23) {
-//            initializePlayer();
-//        }
     }
 
     @Override
@@ -271,7 +261,7 @@ public class playVideo extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.v("Ishi SaveInstance","data saved");
+        Log.v("SaveInstance","data saved");
         playbackPosition = player.getCurrentPosition();
         currentWindow = player.getCurrentWindowIndex();
         playWhenReady = player.getPlayWhenReady();
