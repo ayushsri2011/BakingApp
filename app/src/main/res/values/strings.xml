@@ -14,5 +14,7 @@
     <string name="fav_dish_title">Dish to be displayed in Widget</string>
     <string name="select_fav_dish">Select Favourite Dish</string>
     <string name="address">https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json</string>
+    <string name="recipe_cards">Recipe Cards</string>
+    <string name="select_a_step">Select a step</string>
 
 </resources>

@@ -52,8 +52,6 @@ public class IngredientsFragment extends Fragment {
 
         ArrayAdapter<String> e = new ArrayAdapter<>(getContext(), R.layout.custom_row, li);
         list.setAdapter(e);
-
-
         return rootView;
 
     }
